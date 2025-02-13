@@ -1,0 +1,60 @@
+.fridge {
+  background: linear-gradient(145deg, #e63946, #d2042d);
+  border: 3px solid #aa0011;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  width: 300px;
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Decorative gloss effect on top for that enamel shine */
+.fridge::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 340px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4), transparent);
+  border-radius: 50%;
+}
+
+/* The inside of the fridge with a subtle transparent overlay */
+.fridge-content {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Style for each item inside the fridge */
+.fridge-item {
+  background: rgba(255, 255, 255, 0.8);
+  color: #333;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.fridge-item:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+/* The text input area for adding new items */
+.fridge-input {
+  border: none;
+  padding: 10px;
+  border-top: 2px solid #aa0011;
+  font-size: 16px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.9);
+}
