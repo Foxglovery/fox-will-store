@@ -62,15 +62,35 @@ body {
   margin: 0;
   padding: 10px;
 }
+.flex-item-cont {
+  display: flex;
+  flex-direction: column;
+}
 
 /* Individual inventory item styling */
 .item-container li {
   margin-bottom: 10px;
-  padding: 5px;
+  padding: 10px;
   background: rgba(0, 0, 0, 0.5);
   color: #fff;
-  border-radius: 4px;
+  border-radius: 20px;
   cursor: pointer;
+}
+.item-name {
+  text-align: center;
+}
+
+.item-added {
+  font-size: 12px;
+}
+.item-expiration {
+  font-size: 12px;
+}
+
+.date-container {
+  display: flex;
+  margin-top: 5px;
+  justify-content: space-between;
 }
 
 /* Modal overlay for the add-item form */

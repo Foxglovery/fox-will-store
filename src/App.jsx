@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, push, onValue, remove } from "firebase/database";
 import "./App.css";
-
+import freshIcon from "./assets/fresh.png"
+import expiredIcon from "./assets/dead-fish-white.png"
 // Firebase configuration
 const firebaseConfig = {
   apiKey: import.meta.env.REACT_APP_FIREBASE_API_KEY, // Replace with your API key
@@ -111,32 +112,48 @@ function App() {
       <div className="fridge-container">
         {/* The inner-rect element confines the inventory list to the fridge interior */}
         <div className="inner-rect" ref={containerRef}>
-          <div
-            style={{
-              // transform: `scale(${scale})`,
-              // transformOrigin: "top center",
-              width: "100%",
-            }}
-          >
-            <ul className="item-container" ref={listRef}>
-              {inventory.map((item) => (
-                <li key={item.id} onClick={() => removeItem(item.id)}>
-                  <strong>{item.name}</strong>
-                  <br />
-                  Added: {new Date(item.dateAdded).toLocaleString()}
-                  <br />
-                  {item.expirationDate && (
-                    <>
-                      Expires:{" "}
-                      {new Date(item.expirationDate).toLocaleDateString()}
-                      <br />
-                    </>
-                  )}
-                  Category: {item.category}
-                </li>
-              ))}
-            </ul>
+        <div className="flex-item-cont" style={{ width: "100%" }}>
+  <ul className="item-container" ref={listRef}>
+    {inventory.map((item) => (
+      <li key={item.id} onClick={() => removeItem(item.id)}>
+        <div className="item-name">
+          <strong>{item.name}</strong>
+        </div>
+        <div>
+        </div>
+        <div className="date-container">
+          <div className="item-added">
+        <img
+    src={freshIcon}
+    alt="Favicon"
+    style={{ width: "16px", height: "16px", marginRight: "4px", verticalAlign: "middle" }}
+  />
+          {new Date(item.dateAdded).toLocaleDateString("en-US", {
+            month: "short",
+            day: "2-digit",
+            year: "2-digit"
+          })}
           </div>
+        {item.expirationDate && (
+          <div className="item-expiration">
+            <img
+    src={expiredIcon}
+    alt="Favicon"
+    style={{ width: "16px", height: "16px", marginRight: "4px", verticalAlign: "middle" }}
+    />
+            {new Date(item.expirationDate).toLocaleDateString("en-US", {
+            month: "short",
+            day: "2-digit",
+            year: "2-digit"
+          })}
+          </div>
+        )}
+        </div>
+        
+      </li>
+    ))}
+  </ul>
+</div>
         </div>
       </div>
 
