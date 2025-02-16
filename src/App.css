@@ -37,10 +37,23 @@ body {
   top: 22px; /* Adjust to match the interior of your fridge image */
   left: 30px; /* Adjust accordingly */
   width: 226px; /* Width of the inner area */
-  height: 522px; /* Height of the inner area */
-  overflow: hidden; /* Clipping any overflow from the item container */
+  height: 550px; /* Height of the inner area */
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
   /* Optional border for debugging: */
-  border: 2px dashed rgba(255, 255, 255, 0.5);
+  /* border: 2px dashed rgba(255, 255, 255, 0.5); */
+  border-radius: 30px;
+}
+
+.inner-rect::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Optionally, when actively dragging set the cursor to grabbing */
+.inner-rect.active {
+  cursor: grabbing;
 }
 
 /* Inventory list (item container) styles */

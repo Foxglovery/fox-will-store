@@ -113,8 +113,8 @@ function App() {
         <div className="inner-rect" ref={containerRef}>
           <div
             style={{
-              transform: `scale(${scale})`,
-              transformOrigin: "top center",
+              // transform: `scale(${scale})`,
+              // transformOrigin: "top center",
               width: "100%",
             }}
           >
