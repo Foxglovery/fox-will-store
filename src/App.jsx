@@ -91,13 +91,13 @@ function App() {
         expirationDate: expirationDate
           ? new Date(expirationDate).toISOString()
           : null,
-        category, // should match one of the keys in your categories node
+        category,
       };
       push(inventoryRef, newItem);
       setName("");
       setExpirationDate("");
       setCategory("");
-      setShowForm(false); // Hide the form after submission
+      setShowForm(false);
     }
   };
 
@@ -108,9 +108,9 @@ function App() {
 
   return (
     <div id="main-container">
-      <header>Fridge Inventory</header>
-      <div id="fridge-container">
-        <div id="fridge-content" ref={containerRef}>
+      <div className="fridge-container">
+        {/* The inner-rect element confines the inventory list to the fridge interior */}
+        <div className="inner-rect" ref={containerRef}>
           <div
             style={{
               transform: `scale(${scale})`,
@@ -118,7 +118,7 @@ function App() {
               width: "100%",
             }}
           >
-            <ul id="shopping-list" ref={listRef}>
+            <ul className="item-container" ref={listRef}>
               {inventory.map((item) => (
                 <li key={item.id} onClick={() => removeItem(item.id)}>
                   <strong>{item.name}</strong>
@@ -140,7 +140,6 @@ function App() {
         </div>
       </div>
 
-      {/* Icon button to open the modal form */}
       <button
         id="open-form-button"
         onClick={() => setShowForm(true)}
@@ -149,7 +148,6 @@ function App() {
         ＋
       </button>
 
-      {/* Modal form overlay */}
       {showForm && (
         <div className="modal-overlay">
           <div className="modal-content">
