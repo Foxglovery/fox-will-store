@@ -1,25 +1,25 @@
+/* Mobile-first styling optimized for iPhone */
+
 html,
 body {
   margin: 0;
   padding: 0;
   font-family: "Special Elite", sans-serif;
-  background-color: #90c8e6;
+  background: url("./assets/space-bgrd.jpg") no-repeat center center fixed;
+  background-size: cover;
   color: #432000;
   user-select: none;
-  background: url("./assets/fox_background.png") no-repeat center center fixed;
-  background-size: cover;
-  z-index: -2;
+  height: 100%;
 }
 
-/* Main container for centering content */
+/* Use safe areas for iPhones with a notch */
 #main-container {
-  display: flex;
-  flex-direction: column;
-  max-width: 320px;
-  margin: 30px auto;
-  margin-top: 70px;
-  z-index: 3;
+  margin: 0 auto;
+  padding: env(safe-area-inset);
+  max-width: 420px; /* Adjust based on your design */
+  width: 100%;
   position: relative;
+  z-index: 3;
 }
 
 header {
@@ -29,13 +29,13 @@ header {
   text-shadow: 0px 0px 7px rgba(250, 246, 246, 0.98);
 }
 
-/* Fridge container – replace the background image with your fridge frame */
+/* Fridge container using your outline graphic */
 #fridge-container {
-  background: url("./assets/cherry_fridge_frame.png") no-repeat center center;
-  background-size: cover;
+  background: url("./assets/Fridge-Container.png") no-repeat center center;
+  background-size: contain;
   padding: 20px;
   border-radius: 20px;
-  width: 320px;
+  width: 100%;
   min-height: 500px;
   display: flex;
   flex-direction: column;
@@ -43,19 +43,89 @@ header {
   position: relative;
 }
 
-/* Content inside the fridge where the list and controls appear */
+/* Inner area for inventory list */
 #fridge-content {
   background: rgba(255, 255, 255, 0.7);
   padding: 10px;
   border-radius: 8px;
   margin-top: 20px;
+  height: 300px; /* Set to match your fridge's hollowed-out area */
+  overflow: hidden;
+  position: relative;
 }
 
-/* Input and button styles */
-input {
+/* Shopping list styles */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+ul li {
+  background-color: #883d7f;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 20px;
+  color: #fccd75;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* Plus icon button for opening the modal form */
+#open-form-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #ea483c;
+  color: #fdfdfd;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 36px;
+  line-height: 60px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal overlay styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+/* Modal content styling */
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 320px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.modal-content h2 {
+  margin-top: 0;
+}
+
+/* Input and select styles for the modal form */
+.modal-content input,
+.modal-content select {
   color: #fccd75;
   background-color: #1a2c32;
-  border: 0;
+  border: none;
   padding: 15px;
   border-radius: 8px;
   font-size: 20px;
@@ -64,14 +134,15 @@ input {
   width: 100%;
   box-sizing: border-box;
 }
-input::placeholder {
+
+.modal-content input::placeholder {
   color: #fccd75;
 }
 
-button {
+.modal-content button {
   color: #fdfdfd;
   background-color: #ea483c;
-  border: 0;
+  border: none;
   padding: 15px;
   border-radius: 8px;
   font-size: 20px;
@@ -79,24 +150,4 @@ button {
   width: 100%;
   box-sizing: border-box;
   margin-bottom: 10px;
-}
-
-/* Shopping list styles */
-ul {
-  list-style-type: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-ul li {
-  background-color: #883d7f;
-  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
-  padding: 15px;
-  border-radius: 8px;
-  text-align: center;
-  flex-grow: 1;
-  font-size: 20px;
-  color: #fccd75;
-  cursor: pointer;
 }

@@ -1,0 +1,20 @@
+{
+  "categories": {
+    "dairy": {
+      "name": "Dairy",
+      "averageShelfLife": 7
+    },
+    "produce": {
+      "name": "Produce",
+      "averageShelfLife": 5
+    },
+    "meat": {
+      "name": "Meat",
+      "averageShelfLife": 4
+    },
+    "beverages": {
+      "name": "Beverages",
+      "averageShelfLife": 14
+    }
+  }
+}

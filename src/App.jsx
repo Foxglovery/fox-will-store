@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, push, onValue, remove } from "firebase/database";
 import "./App.css";
@@ -18,13 +18,22 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 function App() {
-  // Form states for new item input
+  // Form fields
   const [name, setName] = useState("");
   const [expirationDate, setExpirationDate] = useState("");
   const [category, setCategory] = useState("");
-  // State for inventory items and categories
+
+  // Inventory and categories
   const [inventory, setInventory] = useState([]);
   const [categories, setCategories] = useState([]);
+
+  // Show/hide modal form
+  const [showForm, setShowForm] = useState(false);
+
+  // Refs for scaling inventory list inside the fridge inner area
+  const containerRef = useRef(null);
+  const listRef = useRef(null);
+  const [scale, setScale] = useState(1);
 
   // Listen for inventory updates
   useEffect(() => {
@@ -60,7 +69,19 @@ function App() {
     });
   }, []);
 
-  // Function to add an inventory item
+  // Recalculate scale so that the inventory list fits inside the inner fridge area
+  useEffect(() => {
+    if (containerRef.current && listRef.current) {
+      const containerHeight = containerRef.current.offsetHeight;
+      const listHeight = listRef.current.offsetHeight;
+      if (listHeight > containerHeight) {
+        setScale(containerHeight / listHeight);
+      } else {
+        setScale(1);
+      }
+    }
+  }, [inventory]);
+
   const addItem = () => {
     if (name.trim() !== "" && category !== "") {
       const inventoryRef = ref(database, "inventory");
@@ -70,16 +91,16 @@ function App() {
         expirationDate: expirationDate
           ? new Date(expirationDate).toISOString()
           : null,
-        category, // this should match one of the keys in the categories node
+        category, // should match one of the keys in your categories node
       };
       push(inventoryRef, newItem);
       setName("");
       setExpirationDate("");
       setCategory("");
+      setShowForm(false); // Hide the form after submission
     }
   };
 
-  // Optional: function to remove an item (triggered on click)
   const removeItem = (itemId) => {
     const itemRef = ref(database, `inventory/${itemId}`);
     remove(itemRef);
@@ -89,51 +110,78 @@ function App() {
     <div id="main-container">
       <header>Fridge Inventory</header>
       <div id="fridge-container">
-        <div id="fridge-content">
-          <input
-            type="text"
-            placeholder="Item name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-          <input
-            type="date"
-            placeholder="Expiration date (optional)"
-            value={expirationDate}
-            onChange={(e) => setExpirationDate(e.target.value)}
-          />
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+        <div id="fridge-content" ref={containerRef}>
+          <div
+            style={{
+              transform: `scale(${scale})`,
+              transformOrigin: "top center",
+              width: "100%",
+            }}
           >
-            <option value="">Select Category</option>
-            {categories.map((cat) => (
-              <option key={cat.id} value={cat.id}>
-                {cat.name}
-              </option>
-            ))}
-          </select>
-          <button onClick={addItem}>Add Item</button>
-          <ul id="shopping-list">
-            {inventory.map((item) => (
-              <li key={item.id} onClick={() => removeItem(item.id)}>
-                <strong>{item.name}</strong>
-                <br />
-                Added: {new Date(item.dateAdded).toLocaleString()}
-                <br />
-                {item.expirationDate && (
-                  <>
-                    Expires:{" "}
-                    {new Date(item.expirationDate).toLocaleDateString()}
-                    <br />
-                  </>
-                )}
-                Category: {item.category}
-              </li>
-            ))}
-          </ul>
+            <ul id="shopping-list" ref={listRef}>
+              {inventory.map((item) => (
+                <li key={item.id} onClick={() => removeItem(item.id)}>
+                  <strong>{item.name}</strong>
+                  <br />
+                  Added: {new Date(item.dateAdded).toLocaleString()}
+                  <br />
+                  {item.expirationDate && (
+                    <>
+                      Expires:{" "}
+                      {new Date(item.expirationDate).toLocaleDateString()}
+                      <br />
+                    </>
+                  )}
+                  Category: {item.category}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
+
+      {/* Icon button to open the modal form */}
+      <button
+        id="open-form-button"
+        onClick={() => setShowForm(true)}
+        title="Add New Item"
+      >
+        ＋
+      </button>
+
+      {/* Modal form overlay */}
+      {showForm && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Add New Item</h2>
+            <input
+              type="text"
+              placeholder="Item name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <input
+              type="date"
+              placeholder="Expiration date (optional)"
+              value={expirationDate}
+              onChange={(e) => setExpirationDate(e.target.value)}
+            />
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">Select Category</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
+            </select>
+            <button onClick={addItem}>Add Item</button>
+            <button onClick={() => setShowForm(false)}>Cancel</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
