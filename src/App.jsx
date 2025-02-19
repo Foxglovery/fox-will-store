@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, push, onValue, remove } from "firebase/database";
 import "./App.css";
@@ -122,7 +122,8 @@ function App() {
         <div className="modal-overlay">
           <div className="modal-content">
             <h2>Add New Item</h2>
-            <input
+            <div className="itemInputCont">
+              <input
               type="text"
               placeholder="Item name"
               value={name}
@@ -145,8 +146,10 @@ function App() {
                 </option>
               ))}
             </select>
-            <button onClick={addItem}>Add Item</button>
-            <button onClick={() => setShowForm(false)}>Cancel</button>
+            </div>
+            
+            <button className="addItemBtn" onClick={addItem}>Add Item</button>
+            <button className="cancelAddBtn" onClick={() => setShowForm(false)}>Cancel</button>
           </div>
         </div>
       )}

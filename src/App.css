@@ -116,20 +116,41 @@ body {
   max-width: 90%;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
+.itemInputCont {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.itemInputCont input {
+  text-align: center;
+}
+
+.itemInputCont select {
+  text-align: center;
+}
+
+.item .addItemBtn {
+}
+
+.cancelAddBtn {
+}
 /* Button to open the modal form */
 #open-form-button {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  font-size: 2rem;
+  bottom: 22px;
+  right: 27px;
+  font-size: 1rem;
   background: #1a1a1a;
   color: #fff;
   border: none;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 25px;
+  height: 25px;
   cursor: pointer;
   z-index: 1100;
   display: flex;
