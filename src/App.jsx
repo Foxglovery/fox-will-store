@@ -148,8 +148,11 @@ function App() {
             </select>
             </div>
             
-            <button className="addItemBtn" onClick={addItem}>Add Item</button>
-            <button className="cancelAddBtn" onClick={() => setShowForm(false)}>Cancel</button>
+            <div className="modalBtnCont">
+              <button className="addItemBtn" onClick={addItem}>Add Item</button>
+              <button className="cancelAddBtn" onClick={() => setShowForm(false)}>Cancel</button>
+            </div>
+            
           </div>
         </div>
       )}
