@@ -37,7 +37,7 @@ body {
   top: 22px; /* Adjust to match the interior of your fridge image */
   left: 30px; /* Adjust accordingly */
   width: 226px; /* Width of the inner area */
-  height: 550px; /* Height of the inner area */
+  height: 555px; /* Height of the inner area */
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -71,9 +71,9 @@ body {
 .item-container li {
   margin-bottom: 10px;
   padding: 10px;
-  background: rgba(0, 0, 0, 0.5);
+  /* background: rgba(0, 0, 0, 0.5); */
   color: #fff;
-  border-radius: 20px;
+  border-radius: 18px;
   cursor: pointer;
 }
 .item-name {

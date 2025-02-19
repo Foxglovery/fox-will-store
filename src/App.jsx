@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, push, onValue, remove } from "firebase/database";
 import "./App.css";
-import freshIcon from "./assets/fresh.png"
-import expiredIcon from "./assets/dead-fish-white.png"
+import InventoryItem from "./components/InventoryItems"; // Import the new component
+
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: import.meta.env.REACT_APP_FIREBASE_API_KEY, // Replace with your API key
+  apiKey: import.meta.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "fox-will-store.firebaseapp.com",
   databaseURL: "https://fox-will-store-default-rtdb.firebaseio.com",
   projectId: "fox-will-store",
@@ -31,10 +31,6 @@ function App() {
   // Show/hide modal form
   const [showForm, setShowForm] = useState(false);
 
-  // Refs for scaling inventory list inside the fridge inner area
-  const containerRef = useRef(null);
-  const listRef = useRef(null);
-  const [scale, setScale] = useState(1);
 
   // Listen for inventory updates
   useEffect(() => {
@@ -70,18 +66,6 @@ function App() {
     });
   }, []);
 
-  // Recalculate scale so that the inventory list fits inside the inner fridge area
-  useEffect(() => {
-    if (containerRef.current && listRef.current) {
-      const containerHeight = containerRef.current.offsetHeight;
-      const listHeight = listRef.current.offsetHeight;
-      if (listHeight > containerHeight) {
-        setScale(containerHeight / listHeight);
-      } else {
-        setScale(1);
-      }
-    }
-  }, [inventory]);
 
   const addItem = () => {
     if (name.trim() !== "" && category !== "") {
@@ -110,50 +94,19 @@ function App() {
   return (
     <div id="main-container">
       <div className="fridge-container">
-        {/* The inner-rect element confines the inventory list to the fridge interior */}
-        <div className="inner-rect" ref={containerRef}>
-        <div className="flex-item-cont" style={{ width: "100%" }}>
-  <ul className="item-container" ref={listRef}>
-    {inventory.map((item) => (
-      <li key={item.id} onClick={() => removeItem(item.id)}>
-        <div className="item-name">
-          <strong>{item.name}</strong>
-        </div>
-        <div>
-        </div>
-        <div className="date-container">
-          <div className="item-added">
-        <img
-    src={freshIcon}
-    alt="Favicon"
-    style={{ width: "16px", height: "16px", marginRight: "4px", verticalAlign: "middle" }}
-  />
-          {new Date(item.dateAdded).toLocaleDateString("en-US", {
-            month: "short",
-            day: "2-digit",
-            year: "2-digit"
-          })}
+        <div className="inner-rect">
+          <div className="flex-item-cont" style={{ width: "100%" }}>
+            <ul className="item-container">
+              {inventory.map((item) => (
+                <InventoryItem
+                  key={item.id}
+                  item={item}
+                  categories={categories}
+                  removeItem={removeItem}
+                />
+              ))}
+            </ul>
           </div>
-        {item.expirationDate && (
-          <div className="item-expiration">
-            <img
-    src={expiredIcon}
-    alt="Favicon"
-    style={{ width: "16px", height: "16px", marginRight: "4px", verticalAlign: "middle" }}
-    />
-            {new Date(item.expirationDate).toLocaleDateString("en-US", {
-            month: "short",
-            day: "2-digit",
-            year: "2-digit"
-          })}
-          </div>
-        )}
-        </div>
-        
-      </li>
-    ))}
-  </ul>
-</div>
         </div>
       </div>
 
