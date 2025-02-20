@@ -115,8 +115,12 @@ function App() {
         onClick={() => setShowForm(true)}
         title="Add New Item"
       >
-        ＋
+        <p>+</p>
+
       </button>
+      
+      
+      
 
       {showForm && (
         <div className="modal-overlay">
