@@ -145,6 +145,7 @@ function App() {
             <h2>Add New Item</h2>
             <div className="itemInputCont">
               <input
+                id="itemNameTextInput"
                 type="text"
                 placeholder="Item name"
                 value={name}
@@ -174,7 +175,7 @@ function App() {
                 Add Item
               </button>
               <button
-                className="cancelAddBtn"
+                id="cancelAddBtn"
                 onClick={() => setShowForm(false)}
               >
                 Cancel
