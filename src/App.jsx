@@ -157,6 +157,7 @@ function App() {
                 value={expirationDate}
                 onChange={(e) => setExpirationDate(e.target.value)}
               />
+              <span>or</span>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -171,7 +172,7 @@ function App() {
             </div>
             <div className="modalBtnCont">
               
-              <button className="addItemBtn" onClick={addItem}>
+              <button id="addItemBtn" onClick={addItem}>
                 Add Item
               </button>
               <button
