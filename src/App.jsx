@@ -189,12 +189,12 @@ function App() {
       {itemToDelete && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <p>
+            <h3 id="deleteText">
               Are you sure you want to delete {itemToDelete.name}?
-            </p>
+            </h3>
             <div className="modalBtnCont">
               <button
-                className="deleteConfirmBtn"
+                id="deleteConfirmBtn"
                 onClick={() => {
                   deleteItem(itemToDelete.id);
                   setItemToDelete(null);
@@ -203,7 +203,7 @@ function App() {
                 Delete
               </button>
               <button
-                className="cancelDeleteBtn"
+                id="cancelDeleteBtn"
                 onClick={() => setItemToDelete(null)}
               >
                 Cancel
